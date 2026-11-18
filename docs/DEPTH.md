@@ -13,6 +13,7 @@
 | M5 保费重算 | 查看并复算保费重算 | `/api/m5_calculate` | `app/modules/m5_calculate/rules.py` | `tests/test_calculate.py` |
 | M6 补退对账 | 查看并复算补退对账 | `/api/m6_reconcile` | `app/modules/m6_reconcile/compare.py` | `tests/test_reconcile.py` |
 | M7 结案归档 | 查看并复算结案归档 | `/api/m7_archive` | `app/modules/m7_archive/export_out.py` | `tests/test_archive.py` |
+| M8 复效裁决 | 登记断缴凭证、裁决恢复基准、结案下载 | `/api/m8_reinstate` | `app/modules/m8_reinstate/rules.py` | `tests/test_reinstate.py` |
 
 ## 陷阱登记
 
@@ -31,6 +32,9 @@
 | TRAP-26 | 旧版本复核 | 覆盖新结论 | 事务条件更新 | `app/store.py` | `tests/test_archive.py::test_stale_review` |
 | TRAP-23 | 生效日端点 | 双计生效日 | 半开区间 | `app/modules/m4_segments/rules.py` | `tests/test_segments.py::test_halfopen_conservation` |
 | TRAP-24 | 分币尾差 | 段合计不等 | 最大余额法 | `app/modules/m5_calculate/rules.py` | `tests/test_calculate.py::test_largest_remainder_conserves` |
+| TRAP-27 | 断缴凭证改写 | 原凭证被覆盖 | 凭证仅登记时写入，异文同案409 | `app/store.py` | `tests/test_reinstate.py::test_certificate_cannot_be_rewritten` |
+| TRAP-28 | 复效重试 | 重复赔款或补费 | 同基准重试幂等空转 | `app/store.py` | `tests/test_reinstate.py::test_same_ruling_retry_adds_nothing` |
+| TRAP-29 | 裁决替换失败 | 新版半写覆盖旧版 | 单条条件更新，失败保留旧版 | `app/store.py` | `tests/test_reinstate.py::test_failed_replace_keeps_old_ruling` |
 
 ## 对账规则
 
